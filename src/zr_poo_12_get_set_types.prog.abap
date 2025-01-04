@@ -9,9 +9,9 @@
 *   Acessível de forma estática:
 *   - O tipo pode ser acessado diretamente pelo nome da classe, como classe=>nome_do_tipo, sem precisar criar uma instância da classe.
 *
-*   Escopo limitado à classe:
-*   - O tipo é visível apenas dentro da classe onde foi declarado, a menos que esteja declarado como PUBLIC.
-*Nesse caso, outras classes ou programas podem acessá-lo com classe=>nome_do_tipo.
+*     Escopo limitado à classe:
+*     - O tipo é visível apenas dentro da classe onde foi declarado, a menos que esteja declarado como PUBLIC.
+*     Nesse caso, outras classes ou programas podem acessá-lo com classe=>nome_do_tipo.
 *
 *   Não é herdável:
 *   - Tipos declarados com TYPES em uma classe não são herdados pelas subclasses. Se a subclasse precisar de um tipo semelhante, será necessário declará-lo novamente.
@@ -19,6 +19,11 @@
 
 * A palavra-chave LINE OF indica que queremos que a variável tenha exatamente a mesma estrutura de uma linha individual da tabela interna.
 
+* Obs.:
+*   - Não é possível passar um tipo complexo (uma tabela por ex) para um método
+*   - Para resolver isso, usamos o TYPES.
+*   - Criamos um TYPES e a tabela fica vinculada a ele
+*   - Depois passamos o TYPES para o método
 *&---------------------------------------------------------------------*
 
 REPORT zr_poo_12_get_set_types.
@@ -78,7 +83,10 @@ CLASS lcl_material DEFINITION.
 
   PRIVATE SECTION.
     DATA:
-      matnr      TYPE matnr,
+      " Tipo de Tabela MATNR_TTY
+      " Para verificar a questão da chave, vai no tipo da tabela na SE11.
+      " Lá podemos ver que é chave não-única, ou seja, pode ter materiais com o mesmo cod.
+      matnr      TYPE matnr,  " WITH NON-UNIQUE KEY
       descricoes TYPE TABLE OF REF TO lcl_descricao_material.
 ENDCLASS.
 
